@@ -1,0 +1,76 @@
+.info-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 24px;
+  background-color: var(--main-bg-color);
+  height: 100%;
+  transition: all 0.5s ease;
+}
+
+.info-card .icon {
+  font-size: 32px;
+  color: white;
+  background-color: var(--blue);
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.info-card:hover {
+  background-color: var(--blue);
+}
+.info-card:hover .content * {
+  color: white;
+}
+
+.info-card:hover .icon {
+  background-color: white;
+  color: var(--blue) !important;
+}
+
+.contact-form {
+  background-color: var(--main-bg-color);
+}
+
+.contact-form .testimonial img {
+  width: 50px;
+  border: 1px solid #ad9b9b;
+  border-radius: 50%;
+}
+
+.contact-form .testimonial img:not(:first-child) {
+  margin-inline-start: -20px;
+}
+
+.certificate {
+  padding: 80px 40px;
+  margin: 20px;
+}
+
+.certificate h1,
+.certificate h5 {
+  color: white;
+}
+
+.certificate img {
+  position: absolute;
+  max-width: 400px;
+  margin-left: 5%;
+  bottom: 0;
+}
+
+@media (min-width: 992px) {
+  .certificate {
+    margin-top: 200px;
+  }
+}
+
+@media (max-width: 575px) {
+  .certificate {
+    padding: 20px 10px;
+  }
+}
