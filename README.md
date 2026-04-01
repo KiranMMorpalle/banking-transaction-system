@@ -409,3 +409,298 @@ This keeps modules independent.
 ---
 
 ✅ If you want, I can also give the **exact entity classes + API flow + transfer logic** so you can build the **whole project in ~6–8 hours** without getting stuck.
+
+
+
+Only the **important architectures widely used in industry** are mainly these **3**:
+
+1️⃣ **Monolithic Architecture**
+2️⃣ **Microservices Architecture**
+3️⃣ **Modular Monolith (Modern Monolith – very common today)**
+
+---
+
+# 1️⃣ Monolithic Architecture
+
+**Meaning**
+
+Entire application runs as **one single codebase and one deployable unit**.
+
+All features share the same:
+
+* database
+* application
+* deployment
+
+### What happens in Monolith
+
+* One Spring Boot application
+* One database
+* All modules inside same project
+* Internal method calls between modules
+
+### Architecture View
+
+```
+                Client / Frontend
+                       │
+                       ▼
+                REST Controllers
+                       │
+                       ▼
+                  Services
+                       │
+                       ▼
+                 Repositories
+                       │
+                       ▼
+                    Database
+```
+
+### Typical Folder Structure
+
+```
+banking-system
+│
+├── controller
+│      ├── AuthController
+│      ├── AccountController
+│      ├── TransactionController
+│
+├── service
+│      ├── AuthService
+│      ├── AccountService
+│      ├── TransactionService
+│
+├── repository
+│      ├── UserRepository
+│      ├── AccountRepository
+│      ├── TransactionRepository
+│
+├── entity
+│      ├── User
+│      ├── Account
+│      ├── Transaction
+│
+└── config
+```
+
+### Pros
+
+* Simple to build
+* Easy debugging
+* Fast development
+
+### Cons
+
+* Hard to scale large systems
+* Entire app redeploy required
+
+---
+
+# 2️⃣ Microservices Architecture
+
+**Meaning**
+
+Application is divided into **independent services**, each service has:
+
+* its own codebase
+* its own database
+* independent deployment
+
+Services communicate via **REST / Kafka / gRPC**.
+
+### What happens in Microservices
+
+Each feature becomes its **own service**.
+
+Example in banking:
+
+* Auth Service
+* Account Service
+* Transaction Service
+
+### Architecture View
+
+```
+                Client
+                  │
+                  ▼
+             API Gateway
+                  │
+     ┌────────────┼────────────┐
+     ▼            ▼            ▼
+ Auth Service  Account Service  Transaction Service
+     │            │            │
+     ▼            ▼            ▼
+ Auth DB       Account DB     Transaction DB
+```
+
+### Project Structure
+
+```
+banking-system
+│
+├── auth-service
+│      ├── controller
+│      ├── service
+│      ├── repository
+│      └── database
+│
+├── account-service
+│      ├── controller
+│      ├── service
+│      ├── repository
+│      └── database
+│
+├── transaction-service
+│      ├── controller
+│      ├── service
+│      ├── repository
+│      └── database
+│
+└── api-gateway
+```
+
+### Pros
+
+* Independent scaling
+* Independent deployments
+* Fault isolation
+
+### Cons
+
+* Complex architecture
+* Distributed transactions
+* DevOps overhead
+
+---
+
+# 3️⃣ Modular Monolith (Industry Best Practice for Medium Systems)
+
+This is what **most companies actually start with**.
+
+**Meaning**
+
+Single application **BUT structured like microservices internally**.
+
+Each feature is a module.
+
+### Architecture View
+
+```
+                 Client
+                   │
+                   ▼
+              Spring Boot App
+                   │
+   ┌───────────────┼───────────────┐
+   ▼               ▼               ▼
+ Auth Module   Account Module   Transaction Module
+   │               │               │
+   └───────────────┴───────────────┘
+                   │
+                   ▼
+                Database
+```
+
+### Folder Structure
+
+```
+banking-system
+│
+├── auth
+│     ├── controller
+│     ├── service
+│     ├── repository
+│
+├── account
+│     ├── controller
+│     ├── service
+│     ├── repository
+│
+├── transaction
+│     ├── controller
+│     ├── service
+│     ├── repository
+│
+├── security
+├── config
+└── common
+```
+
+### Why companies use this
+
+Because later you can convert:
+
+```
+auth module → auth-service
+account module → account-service
+transaction module → transaction-service
+```
+
+without rewriting everything.
+
+---
+
+# Quick Comparison
+
+| Feature      | Monolith | Modular Monolith | Microservices |
+| ------------ | -------- | ---------------- | ------------- |
+| Applications | 1        | 1                | Many          |
+| Deployment   | Single   | Single           | Multiple      |
+| Database     | Single   | Single           | Multiple      |
+| Complexity   | Low      | Medium           | High          |
+| Scalability  | Low      | Medium           | High          |
+
+---
+
+✅ **For your 2-day banking project**
+
+Use:
+
+**Modular Monolith**
+
+Because:
+
+* Fast development
+* Clean architecture
+* Future microservice migration possible.
+
+
+For your **banking transaction project (modular monolith)**, keep it **simple and minimal**. You only need **6 modules**.
+
+### Modules to build
+
+1️⃣ **Auth Module**
+Register, login, JWT generation.
+
+2️⃣ **User Module**
+User profile and basic user data management.
+
+3️⃣ **Account Module**
+Create bank account, account details, balance.
+
+4️⃣ **Transaction Module**
+Transfer money and store transaction history.
+
+5️⃣ **Security Module**
+Spring Security config, JWT filter, authentication logic.
+
+6️⃣ **Common / Config Module**
+Global exception handling, utilities, constants, configuration.
+
+### Simple structure
+
+```
+banking-system
+├── auth
+├── user
+├── account
+├── transaction
+├── security
+└── common (config + exception handling)
+```
+
+This is **clean, scalable, and not over-engineered** for your project.
+
